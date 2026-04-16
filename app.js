@@ -218,10 +218,10 @@ el.form.onsubmit = async e => {
   e.preventDefault();
 
   const data = {
-    name: el.name.value,
-    phone: el.phone.value,
-    email: el.email.value,
-    address: el.address.value
+    name: el.name.value.trim(),
+    phone: el.phone.value.trim(),
+    email: el.email.value.trim(),
+    address: el.address.value.trim()
   };
 
   try {
