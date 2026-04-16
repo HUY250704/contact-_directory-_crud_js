@@ -1,7 +1,7 @@
 const API = 'https://687f4c3aefe65e52008922e1.mockapi.io/user/directory';
-const $ = id => document.getElementById(id);
+const $ = id =>document.getElementById(id)
 
-// ================= ELEMENT =================
+
 const el = {
   grid: $('directory-grid'),
   search: $('search-input'),
@@ -57,7 +57,6 @@ const ICONS = {
   `
 };
 
-// ================= UI =================
 const show = e => e.classList.remove('hidden');
 const hide = e => e.classList.add('hidden');
 
@@ -72,7 +71,7 @@ const showError = msg => {
   show(el.error);
 };
 
-// ================= API =================
+
 const request = async (url = '', options = {}) => {
   const res = await fetch(API + url, {
     headers: { 'Content-Type': 'application/json' },
@@ -84,7 +83,7 @@ const request = async (url = '', options = {}) => {
   return data;
 };
 
-// ================= LOAD =================
+
 const fetchContacts = async () => {
   try {
     contacts = await request('');
@@ -94,7 +93,7 @@ const fetchContacts = async () => {
   }
 };
 
-// ================= RENDER =================
+
 const render = list => {
   el.grid.innerHTML = list.length
     ? list.map(c => `
@@ -126,14 +125,12 @@ const render = list => {
         : `<p class="col-span-full py-14 text-center text-lg text-[#4B5563]">Chưa có danh bạ nào .Hãy thêm danh bạ mới !</p>`;
 };
 
-// ================= SEARCH =================
 const applyFilter = () => {
   const k = searchTerm.toLowerCase();
 
   render(
     contacts.filter(c =>
-      [c.name, c.phone, c.email, c.address]
-        .some(v => (v || '').toLowerCase().includes(k))
+      (c.name || '').toLowerCase().includes(k)
     )
   );
 };
@@ -143,7 +140,6 @@ el.search.oninput = e => {
   applyFilter();
 };
 
-// ================= MODAL =================
 const openModal = (mode = 'create', data = {}) => {
   editingId = mode === 'edit' ? data.id : null;
 
@@ -168,10 +164,8 @@ const closeModal = () => {
   el.modal.classList.remove('flex');
 };
 
-// ================= CREATE =================
 el.openCreate.onclick = () => openModal('create');
 
-// ================= EDIT =================
 window.editContact = async id => {
   try {
     const data = await request(`/${id}`);
@@ -181,7 +175,6 @@ window.editContact = async id => {
   }
 };
 
-// ================= DELETE =================
 window.openDelete = id => {
   deletingId = String(id);
 
@@ -221,7 +214,6 @@ el.deleteModal.onclick = e => {
   if (e.target === el.deleteModal) closeDeleteModal();
 };
 
-// ================= SUBMIT (FIXED CORE BUG HERE) =================
 el.form.onsubmit = async e => {
   e.preventDefault();
 
@@ -241,7 +233,6 @@ el.form.onsubmit = async e => {
       }
     );
 
-    // Ä‘Å¸â€Â¥ UPDATE LOCAL STATE (KHÄ‚â€NG fetchContacts nĂ¡Â»Â¯a)
     if (editingId) {
       contacts = contacts.map(c =>
         String(c.id) === String(editingId)
@@ -261,7 +252,7 @@ el.form.onsubmit = async e => {
   }
 };
 
-// ================= EVENTS =================
+
 el.retry.onclick = fetchContacts;
 el.dismiss.onclick = () => hide(el.success);
 
@@ -272,6 +263,5 @@ el.modal.onclick = e => {
   if (e.target === el.modal) closeModal();
 };
 
-// ================= INIT =================
 fetchContacts();
 

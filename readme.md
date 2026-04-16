@@ -1,5 +1,7 @@
 # 📒 Contact Directory App
 
+ link wed mẫu :https://contact-management-beta-thaovo.vercel.app/
+
 ##  Nhiệm vụ
 Xây dựng một ứng dụng **Quản Lý Danh Bạ** hoàn chỉnh, cho phép người dùng:
 - Xem danh sách danh bạ  
